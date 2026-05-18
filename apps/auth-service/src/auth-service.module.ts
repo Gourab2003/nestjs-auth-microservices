@@ -1,10 +1,17 @@
 import { Module } from '@nestjs/common';
-import { AuthServiceController } from './auth-service.controller';
-import { AuthServiceService } from './auth-service.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { connection } from 'mongoose';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [],
-  controllers: [AuthServiceController],
-  providers: [AuthServiceService],
+  imports: [
+    MongooseModule.forRoot(process.env.MONGO_URI!, {
+      connectionFactory: (connection) => {
+        console.log('db connection successfull');
+        return connection;
+      },
+    }),
+    AuthModule,
+  ],
 })
 export class AuthServiceModule {}
