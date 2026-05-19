@@ -13,7 +13,7 @@ async function bootstrap() {
 
   console.log('Notification Service Running on 3001');
 
-  const connection = await amqp.connect('amqp://localhost:5672');
+  const connection = await amqp.connect(process.env.RABBITMQ_URL!);
 
   const channel = await connection.createChannel();
 
